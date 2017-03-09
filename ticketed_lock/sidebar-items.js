@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["ReadLockGuard","The read-only guard of data, allowing `&T` dereferences."],["ReadTicket","A ticket to read the data at some point."],["TicketedLock","The ticketed lock, which wraps the data."],["WriteLockGuard","The read-only guard of data, allowing `&T` dereferences."],["WriteTicket","A ticket to read/write the data at some point."]]});

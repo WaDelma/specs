@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `ticketed_lock` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, ticketed_lock">
+
+    <title>ticketed_lock - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'></p><script>window.sidebarCurrent = {name: 'ticketed_lock', ty: 'mod', relpath: '../'};</script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>ticketed_lock</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/ticketed_lock/lib.rs.html#1-142' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>Ticketed lock.</p>
+
+<p>Ticketed lock is similar to RwLock, except that the acquisition of the lock is split:</p>
+
+<ol>
+<li>obtaining a ticket, which has to be done on the same thread as the locked storage</li>
+<li>waiting on a ticket, which puts the current thread to sleep until the ticket is due. That moment comes when all the previous tickets are processed.</li>
+<li>working with the data behind a read/lock guard</li>
+<li>when the guard is freed, it allows the following tickets to become active</li>
+</ol>
+
+<p>A ticket can be moved between threads or even just lost.
+Consecutive read-only tickets do not guarantee a particular lock order.
+All the ticket counting is done based on <code>Arc</code> primitives, and the only unsafe code that this library has is for accessing the actual data behind a guard.</p>
+</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.ReadLockGuard.html'
+                                  title='ticketed_lock::ReadLockGuard'>ReadLockGuard</a></td>
+                           <td class='docblock-short'>
+                                <p>The read-only guard of data, allowing <code>&amp;T</code> dereferences.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.ReadTicket.html'
+                                  title='ticketed_lock::ReadTicket'>ReadTicket</a></td>
+                           <td class='docblock-short'>
+                                <p>A ticket to read the data at some point.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.TicketedLock.html'
+                                  title='ticketed_lock::TicketedLock'>TicketedLock</a></td>
+                           <td class='docblock-short'>
+                                <p>The ticketed lock, which wraps the data.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.WriteLockGuard.html'
+                                  title='ticketed_lock::WriteLockGuard'>WriteLockGuard</a></td>
+                           <td class='docblock-short'>
+                                <p>The read-only guard of data, allowing <code>&amp;T</code> dereferences.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.WriteTicket.html'
+                                  title='ticketed_lock::WriteTicket'>WriteTicket</a></td>
+                           <td class='docblock-short'>
+                                <p>A ticket to read/write the data at some point.</p>
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "ticketed_lock";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>
